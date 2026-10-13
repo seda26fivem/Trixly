@@ -14,8 +14,12 @@
     "better-sqlite3": "^13.0.3",
     "discord.js": "^14.27.0",
     "dotenv": "^18.0.7",
+    "ejs": "^7.0.1",
     "express": "^5.3.0",
+    "express-session": "^1.19.0",
     "mongoose": "^9.11.1",
+    "passport": "^0.7.0",
+    "passport-discord": "^0.1.4",
     "quick.db": "^9.1.7"
   }
 }
