@@ -42,7 +42,7 @@ passport.deserializeUser((obj, done) => done(obj, done));
 passport.use(new DiscordStrategy({
   clientID: process.env.DISCORD_CLIENT_ID,
   clientSecret: process.env.DISCORD_CLIENT_SECRET,
-  callbackURL: 'https://tixly.onrender.com/auth/discord/callback',
+  callbackURL: 'https://trixly.onrender.com/auth/discord/callback',
   scope: ['identify', 'guilds']
 }, (accessToken, refreshToken, profile, done) => {
   return done(null, profile);
