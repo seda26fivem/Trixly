@@ -48,6 +48,10 @@ passport.use(new DiscordStrategy({
   return done(null, profile);
 }));
 
+app.get('/', (req, res) => {
+  res.render('index');
+});
+
 app.get('/auth/discord', passport.authenticate('discord'));
 
 app.get('/auth/discord/callback', passport.authenticate('discord', {
