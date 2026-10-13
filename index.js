@@ -291,12 +291,11 @@ client.on('interactionCreate', async interaction => {
 });
 
 client.login(process.env.DISCORD_TOKEN);
-const express = require('express');
-const app = express();
-const port = process.env.PORT || 3000;
+
+app.set('view engine', 'ejs');
 
 app.get('/', (req, res) => {
-  res.send('Bot is online!');
+  res.render('index');
 });
 
 app.listen(port, () => {
