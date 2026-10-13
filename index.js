@@ -19,6 +19,43 @@ const {
 } = require('discord.js');
 const mongoose = require('mongoose');
 
+const express = require('express');
+const app = express();
+const port = process.env.PORT || 3000;
+
+const session = require('express-session');
+const passport = require('passport');
+const DiscordStrategy = require('passport-discord').Strategy;
+
+app.use(session({
+  secret: 'tixly_super_secret_key',
+  resave: false,
+  saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.serializeUser((user, done) => done(null, user));
+passport.deserializeUser((obj, done) => done(obj, done));
+
+passport.use(new DiscordStrategy({
+  clientID: process.env.DISCORD_CLIENT_ID,
+  clientSecret: process.env.DISCORD_CLIENT_SECRET,
+  callbackURL: 'https://tixly.onrender.com/auth/discord/callback',
+  scope: ['identify', 'guilds']
+}, (accessToken, refreshToken, profile, done) => {
+  return done(null, profile);
+}));
+
+app.get('/auth/discord', passport.authenticate('discord'));
+
+app.get('/auth/discord/callback', passport.authenticate('discord', {
+  failureRedirect: '/'
+}), (req, res) => {
+  res.redirect('/dashboard');
+});
+
 // --- MONGODB DATABASE MODEL ---
 const guildSchema = new mongoose.Schema({
     guildId: { type: String, required: true, unique: true },
